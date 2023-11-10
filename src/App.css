@@ -1,20 +1,48 @@
+img{
+  height: 150px;
+  margin-top: -100px;
+  margin-bottom: 40px;
+}
 .App {
   text-align: center;
+  background-color: #F1E2FF;
+}
+.form{
+  background-color: #ffffff;
+  height: 400px;
+  width: 600px;
+  box-shadow: 5px 5px 20px #888888;
+}
+.text{
+  color: black;
+  font-size: 15px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.textContainer{
+  margin-top: 30px;
+  margin-left: 140px;
+  text-align: left;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.passwordContainer{
+  margin-top: 15px;
+  margin-left: 140px;
+  text-align: left;
+}
+
+.inputContainer{
+  margin-top: 4px;
+  margin-left: 140px;
+  text-align: left;
+}
+input{
+  height: 30px;
+  width: 300px;
+  border: 1px solid #ccc; /* Define el margen de color gris claro */
+  border-radius: 0;
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,15 +52,32 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.buttonContainer{
+  margin-top: 39px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.buttonLogin {
+  background: linear-gradient(to right, #A140FF, #00ADBF);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 200px;
+  height:36.5px;
+}
+
+.buttonLogin:hover {
+  background: #000080;
+}
+
+.linkContainer{
+  margin-top: 13px;
+}
+
+.textLink{
+  color: #000080;
+  font-size: 15px;
 }
