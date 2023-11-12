@@ -1,45 +1,72 @@
-img{
+img {
   height: 150px;
-  margin-top: -100px;
-  margin-bottom: 40px;
+  margin-top: -40px;
+  margin-bottom: 5px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 .App {
   text-align: center;
-  background-color: #F1E2FF;
+  background-color: #f1e2ff;
 }
-.form{
+.form {
   background-color: #ffffff;
   height: 400px;
   width: 600px;
   box-shadow: 5px 5px 20px #888888;
+  position: relative;
+  border-radius: 20px;
+  height: auto;
 }
-.text{
+.formModal {
+  background-color: #ffffff;
+  height: auto;
+  width: 600px;
+  position: absolute;
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 5px 20px #888888;
+}
+.text {
   color: black;
   font-size: 15px;
+  font-weight: bold;
 }
-
-.textContainer{
+.titulo {
+  color: black;
+  font-size: 100%;
+  font-weight: bold;
+  font-family: "Arial";
+}
+.textContainer {
   margin-top: 30px;
   margin-left: 140px;
   text-align: left;
 }
-
-.passwordContainer{
+.textModal {
+  margin-top: 30px;
+  margin-left: 10px;
+  text-align: left;
+}
+.passwordContainer {
   margin-top: 15px;
   margin-left: 140px;
   text-align: left;
 }
 
-.inputContainer{
+.inputContainer {
   margin-top: 4px;
   margin-left: 140px;
   text-align: left;
 }
-input{
+input {
   height: 30px;
   width: 300px;
   border: 1px solid #ccc; /* Define el margen de color gris claro */
-  border-radius: 0;
+  border-radius: 5px;
 }
 
 .App-header {
@@ -52,12 +79,12 @@ input{
   color: white;
 }
 
-.buttonContainer{
+.buttonContainer {
   margin-top: 39px;
 }
 
 .buttonLogin {
-  background: linear-gradient(to right, #A140FF, #00ADBF);
+  background: linear-gradient(to right, #a140ff, #00adbf);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -66,18 +93,46 @@ input{
   cursor: pointer;
   border-radius: 10px;
   width: 200px;
-  height:36.5px;
+  height: 36.5px;
 }
-
+.cancelarModal {
+  background: linear-gradient(to right, #a140ff, #00adbf);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 200px;
+  height: 36.5px;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 200px;
+  margin-bottom: 20px;
+}
 .buttonLogin:hover {
   background: #000080;
 }
 
-.linkContainer{
+.linkContainer {
   margin-top: 13px;
 }
 
-.textLink{
+.textLink {
   color: #000080;
   font-size: 15px;
+}
+.eyeIcon {
+  color: rgb(4, 4, 4);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.faUser {
+  color: rgb(4, 4, 4);
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
 }
