@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f1e2ff;
+}
+
+header {
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+.search-input {
+  width: 300px;
+  height: 30px;
+  margin-right: 100px;
+}
+
+h1 {
+  display: inline-block;
+  margin-right: 450px;
+}
+
+main {
+  text-align: center;
+  padding: 20px;
+}
+
+.data-table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 8px;
+}
+
+.data-table th {
+  background-color: #f0f0f0;
+}
+
+.data-table th,
+.data-table td {
+  background-color: #000080;
+  color: #ffffff;
+}
+
+.data-table tbody td {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.accept-button,
+.reject-button {
+  padding: 8px 12px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.accept-button {
+  background-color: #00adbf;
+  color: #fff;
+}
+
+.reject-button {
+  background-color: #b80081;
+  color: #fff;
+}
