@@ -2,7 +2,7 @@ import React from "react";
 
 const MyCard = ({ id, title, content, imagen }) => {
   function SolicitarLibro() {
-    console.log("Solicitar Libro con ID: " + id);
+    console.log("Solicitar Libro con ID: " + content);
   }
 
   // const CalculateAxios = async () => {
@@ -28,7 +28,7 @@ const MyCard = ({ id, title, content, imagen }) => {
       <div className="card-body">
         <div className="text-center d-flex justify-content-center align-items-center" style={{padding: "50px"}}>
           <img
-            src={imagen}
+            src={imagen? imagen: "https://cdn-icons-png.flaticon.com/512/207/207114.png"}
             alt="portada_libro"
             style={{ width: "200px", height: "300px" }}
           />

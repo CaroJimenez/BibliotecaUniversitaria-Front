@@ -1,17 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { getCategory, getSubCategory } from "../../services/axiosCategories";
 
 const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
+  const [categorys, setCategory] = useState([]);
+  const [subCategorys, setSubCategory] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+  const [imagen, setImagen] = useState(null);
   const [nuevoLibro, setNuevoLibro] = useState({
     title: "",
     description: "",
-    // imagen: "",
-    categoria: "",
-    subcategoria: "",
+    image_name: "",
+    id_category_book: 2,
+    id_subcategory: 1,
+    author: "",
+    publication_date: "",
   });
+
+  useEffect(() => {
+    getCategoriesAxios();
+    getSubCategoriesAxios();
+  }, []);
+
+  async function getCategoriesAxios() {
+    try {
+      const category = await getCategory();
+      setCategory(category.data);
+    } catch (error) {
+      console.error("Error al obtener las categorias: ", error);
+    }
+  }
+
+  async function getSubCategoriesAxios() {
+    try {
+      const subCategory = await getSubCategory();
+      console.log(subCategory);
+      setSubCategory(subCategory.data);
+    } catch (error) {
+      console.error("Error al obtener las categorias: ", error);
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === "id_category_book") {
+      setSelectedCategoryId(value);
+    }
+    // console.log(e.target);
+    // if (e.target.files[0] !== null) {
+    //   const file = e.target.files[0];
+    //   setImagen(file);
+    // }
     setNuevoLibro({
       ...nuevoLibro,
       [name]: value,
@@ -19,9 +58,20 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
   };
 
   const handleAgregarLibro = () => {
-    // Lógica para agregar el nuevo libro
     agregarLibro(nuevoLibro);
     closeModal();
+  };
+
+  const handleImagenChange = (e) => {
+    const file = e.target.files[0];
+    setImagen(file);
+  };
+
+  const filterSubcategories = () => {
+    const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
+      return parseInt(subCategory.id) === parseInt(selectedCategoryId);
+    });
+    return filteredSubcategoriesFild;
   };
 
   return (
@@ -42,12 +92,32 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
-            <Form.Label>Contenido:</Form.Label>
+            <Form.Label>Descripción del Libro:</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
-              name="Descripción"
+              name="description"
               value={nuevoLibro.description}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formAuthor">
+            <Form.Label>Author:</Form.Label>
+            <Form.Control
+              type="text"
+              name="author"
+              value={nuevoLibro.author}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formFecha">
+            <Form.Label>Fecha de publicación:</Form.Label>
+            <Form.Control
+              type="date"
+              name="publication_date"
+              value={nuevoLibro.publication_date}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -56,15 +126,48 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
             <Form.Label>Categoría:</Form.Label>
             <Form.Control
               as="select"
-              name="categoria"
-              value={nuevoLibro.categoria}
+              name="id_category_book"
+              value={nuevoLibro.id_category_book}
               onChange={handleInputChange}
             >
-              <option value="">Selecciona una categoría</option>
-              <option value="Ficción">Ficción</option>
-              <option value="No ficción">No ficción</option>
-              {/* Agrega más opciones según tus necesidades */}
+              <option value="0">Selecciona una categoría</option>
+              {categorys.map((category) => (
+                <option key={category.id_category} value={category.id_category}>
+                  {category.name}
+                </option>
+              ))}
             </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="formSubcategoria">
+            <Form.Label>Subcategoría:</Form.Label>
+            <Form.Control
+              as="select"
+              name="id_subcategory"
+              value={nuevoLibro.id_subcategory}
+              onChange={handleInputChange}
+            >
+              <option value="0">Selecciona una subcategoría</option>
+              {filterSubcategories().map((subCategory) => (
+                <option key={subCategory.id} value={subCategory.id}>
+                  {subCategory.name}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="formImagen">
+            <Form.Label>Seleccionar Imagen:</Form.Label>
+            <Form.Control
+              type="file"
+              name="image_name"
+              value={nuevoLibro.imagen_name}
+              onChange={handleInputChange}
+            />
+            {imagen && (
+              <div>
+                <p>Nombre del Archivo: {imagen.name}</p>
+                <p>Tipo de Archivo: {imagen.type}</p>
+              </div>
+            )}
           </Form.Group>
         </Form>
       </Modal.Body>

@@ -4,19 +4,20 @@ import NavbarAdmin from "../../components/NavbarAdmin";
 import LibrosCard from "./Card";
 import AdminCard from "./CardAdmin";
 import ModalAddbook from "../../components/book/ModalAddBook";
+import ModalAddCategory from "../../components/category/ModalAddCategory";
 import { Modal, Button, Form } from "react-bootstrap";
-import { getBooks } from "../../services/axiosBooks";
-import { getCategory } from "../../services/axiosCategories";
+import { getBooks, postNewBook } from "../../services/axiosBooks";
 import "../../App.css";
 import "../../css/estilos.css";
 
 const ListBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [theme, setTheme] = useState("claro");
-  const [typeUser, setTypeUser] = useState(2);
+  const [typeUser, setTypeUser] = useState(1);
   const [booksP, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalC, setShowModalC] = useState(false);
+  const [showModalS, setShowModalS] = useState(false);
 
   const openModal = () => {
     setShowModal(true);
@@ -24,6 +25,10 @@ const ListBooks = () => {
 
   const openModalCategoria = () => {
     setShowModalC(true);
+  };
+
+  const openModalSubCategoria = () => {
+    setShowModalS(true);
   };
 
   const closeModal = () => {
@@ -34,33 +39,53 @@ const ListBooks = () => {
     setShowModalC(false);
   };
 
+  const closeModalS = () => {
+    setShowModalS(false);
+  };
+
   useEffect(() => {
-    getCategoriesAxios();
     getBooksAxios();
   }, []);
 
   async function getBooksAxios() {
     try {
       const books = await getBooks();
-      console.log('Lista de libros:', books);
-      // setBooks(books);
+      console.log('Lista de libros:', books.data);
+      setBooks(books.data);
     } catch (error) {
       console.error("Error al obtener los libros: ", error);
     }
   }
 
-  async function getCategoriesAxios() {
-    try {
-      const category = await getCategory();
-      console.log(category);
-    } catch (error) {
-      console.error("Error al obtener las categorias: ", error);
+  const handleAddCategory = async(nuevaCategoria) => {
+    if (nuevaCategoria) {
+      
+    }else{
+      alert("La categoria no puede estar vacia");
     }
   }
 
-  const handleAgregarLibro = (nuevoLibro) => {
-    // Lógica para agregar el nuevo libro (puedes implementarla según tu necesidad)
-    console.log("Nuevo libro:", nuevoLibro);
+  const handleAgregarLibro = async(nuevoLibro) => {
+    console.log("Nuevo libro Solo Esta:", nuevoLibro);     
+    if (nuevoLibro) {
+      const Data = new FormData();
+      Data.append("title", nuevoLibro.title);
+      Data.append("description", nuevoLibro.description);
+      Data.append("author", nuevoLibro.author);
+      Data.append("id_category_book", nuevoLibro.id_category_book);
+      Data.append('id_subcategory', nuevoLibro.id_subcategory);
+      Data.append('author', nuevoLibro.author);
+
+      try {
+        const newbook = await postNewBook(Data);
+        console.log(newbook);
+
+      } catch (error) {
+        // Manejar el error
+        console.error("Error al calcular el costo:", error);
+      }
+    }
+
   };
 
   const handleSearchChange = (event) => {
@@ -88,11 +113,14 @@ const ListBooks = () => {
           <div className="d-flex justify-content-end mb-4">
             {typeUser === 2 && (
               <>
-              <button style={{ margin: "5px", height: "50%", width: "150px" }} className="btn btn-primary" onClick={openModal}>
+              <button style={{ margin: "5px", height: "43px", width: "175px" }} className="btn btn-primary" onClick={openModal}>
                 Nuevo Libro
               </button>
-              <button style={{ margin: "5px", height: "50%", width: "150px" }} className="btn btn-primary" onClick={openModalCategoria}>
-                Nueva Categoria
+              <button style={{ margin: "5px", height: "43px", width: "175px" }} className="btn btn-primary" onClick={openModalCategoria}>
+                Nueva Categoría
+              </button>
+              <button style={{ margin: "5px", height: "43px", width: "175px" }} className="btn btn-primary" onClick={openModalCategoria}>
+                Nueva Sub Categoría
               </button>
               </>
             )}
@@ -113,7 +141,7 @@ const ListBooks = () => {
                       <LibrosCard
                         id={item.id}
                         title={item.title}
-                        content={item.content}
+                        content={item.description}
                         imagen={item.imagen}
                         categoria={item.categoria}
                         subcategoria={item.subcategia}
@@ -122,7 +150,7 @@ const ListBooks = () => {
                       <AdminCard
                         id={item.id}
                         title={item.title}
-                        content={item.content}
+                        content={item.description}
                         imagen={item.imagen}
                         categoria={item.categoria}
                         subcategoria={item.subcategia}
@@ -135,6 +163,11 @@ const ListBooks = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 agregarLibro={handleAgregarLibro}
+              />
+               <ModalAddCategory
+                showModal={showModalC}
+                closeModal={closeModalC}
+                agregarLibro={handleAddCategory}
               />
             </div>
           </div>
