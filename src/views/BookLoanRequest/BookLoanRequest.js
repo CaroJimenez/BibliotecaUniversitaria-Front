@@ -1,9 +1,11 @@
 import React from "react";
 import "./BookLoanRequest.css";
+import NavbarStudent from "../../components/NavbarStudent";
 
 function BookLoanRequest() {
   return (
     <div className="book-loan-request">
+      <NavbarStudent />
       <h1 className="title">Solicitar Préstamo</h1>
       <div className="book-info">
         <img
