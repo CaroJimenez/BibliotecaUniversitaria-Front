@@ -1,0 +1,56 @@
+.book-loan-request {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body {
+  background-color: #f1e2ff;
+}
+
+.title {
+  text-align: center;
+  color: #000000;
+  margin-bottom: 70px;
+}
+
+.book-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.book-image {
+  width: 300px;
+  height: auto;
+  margin-right: 20px;
+  margin-left: -20px;
+  margin-top: 20px;
+}
+
+.info {
+  color: #000000;
+}
+
+.info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.info p {
+  margin: 5px 0;
+}
+
+.request-button {
+  padding: 10px 20px;
+  background-color: #00adbf;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-end;
+  border: none;
+}

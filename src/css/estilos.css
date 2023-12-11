@@ -1,0 +1,60 @@
+.fondo-claro {
+    background-color: #f1e2ff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
+  
+  .fondo-oscuro {
+    background-color: #5e4279;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
+  
+  .fondoNavbar-claro {
+    background: linear-gradient(to right, #a140ff, #00adbf);
+    color: white;
+  }
+  
+  .fondoNavbar-oscuro {
+    background: linear-gradient(to right, #4a1d77, #004951);
+    color: white;
+  }
+  
+  .navbar .navbar-brand, .navbar .nav-link {
+    color: white;
+    font-weight: bold;
+  }
+
+  .button_card_admin {
+    color: rgba(0, 0, 255, 0.626);
+    border: none;
+    background: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
+
+  .button_card_admin_d {
+    color: rgba(255, 0, 0, 0.562);
+    border: none;
+    background: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
