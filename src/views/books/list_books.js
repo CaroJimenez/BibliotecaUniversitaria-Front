@@ -19,6 +19,7 @@ const ListBooks = () => {
   const [showModalC, setShowModalC] = useState(false);
   const [showModalS, setShowModalS] = useState(false);
 
+  //Funciones para abrir los componentes de Modal
   const openModal = () => {
     setShowModal(true);
   };
