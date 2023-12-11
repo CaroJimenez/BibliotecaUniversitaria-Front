@@ -47,9 +47,10 @@ img {
   text-align: left;
 }
 .textModal {
-  margin-top: 30px;
+  margin-top: 15px;
   margin-left: 10px;
   text-align: left;
+
 }
 .passwordContainer {
   margin-top: 15px;
@@ -58,14 +59,14 @@ img {
 }
 
 .inputContainer {
-  margin-top: 4px;
+  margin-top: 10px;
   margin-left: 140px;
   text-align: left;
 }
 input {
   height: 30px;
   width: 300px;
-  border: 1px solid #ccc; /* Define el margen de color gris claro */
+  border: 1px solid #ccc; 
   border-radius: 5px;
 }
 
@@ -108,20 +109,49 @@ input {
   height: 36.5px;
   align-items: center;
   margin-top: 20px;
-  margin-left: 200px;
+  margin-right: 20px;
+  margin-left: 20px;
   margin-bottom: 20px;
 }
+.botonesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.enviarToken {
+  background: linear-gradient(to right, #a140ff, #00adbf);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 200px;
+  height: 36.5px;
+  margin-top: 10px;
+
+}
+.token {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -40px;
+}
+
 .buttonLogin:hover {
   background: #000080;
 }
 
 .linkContainer {
   margin-top: 13px;
+  cursor: pointer;
 }
 
 .textLink {
   color: #000080;
   font-size: 15px;
+  cursor: pointer;
 }
 .eyeIcon {
   color: rgb(4, 4, 4);

@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ListBooks from "./views/books/List_books";
+import listBooks from "./views/books/list_books";
 import Login from "./views/login/Login"
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     },
     {
       path: "/list_books",
-      element: <ListBooks/>
+      element: <listBooks/>
     }
   ])
 
