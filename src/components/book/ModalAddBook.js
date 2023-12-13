@@ -154,7 +154,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
               ))}
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="formImagen">
+          {/* <Form.Group controlId="formImagen">
             <Form.Label>Seleccionar Imagen:</Form.Label>
             <Form.Control
               type="file"
@@ -168,7 +168,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
                 <p>Tipo de Archivo: {imagen.type}</p>
               </div>
             )}
-          </Form.Group>
+          </Form.Group> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>

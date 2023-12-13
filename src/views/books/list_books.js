@@ -14,7 +14,32 @@ const ListBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [theme, setTheme] = useState("claro");
   const [typeUser, setTypeUser] = useState(1);
-  const [booksP, setBooks] = useState([]);
+  const [booksP, setBooks] = useState([
+    {
+      id: 1,
+      title: "Libro 1",
+      content: "Contenido del Libro 1",
+      imagen: null,
+      categoria: "Ficción",
+      subcategoria: "Aventura",
+    },
+    {
+      id: 2,
+      title: "Libro 2",
+      content: "Contenido del Libro 2",
+      imagen: null, // Puede ser nulo si no hay imagen
+      categoria: "No Ficción",
+      subcategoria: "Historia",
+    },
+    {
+      id: 3,
+      title: "Libro 3",
+      content: "Contenido del Libro 3",
+      imagen: null,
+      categoria: "Misterio",
+      subcategoria: "Suspense",
+    },
+  ]);
   const [showModal, setShowModal] = useState(false);
   const [showModalC, setShowModalC] = useState(false);
   const [showModalS, setShowModalS] = useState(false);
