@@ -2,7 +2,6 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ListBooks from "./views/books/list_books";
 import Login from "./views/login/Login";
-import Navbar from "./components/Navbar";
 import RequestBooks from "./views/RequestBooks/RequestBooks";
 import BookLoanRequest from "./views/BookLoanRequest/BookLoanRequest";
 import ViewFinesBooks from "./views/ViewFinesBooks/ViewFinesBooks";
@@ -33,16 +32,6 @@ function App() {
     {
       path: "/devoluciones_libros",
       element: <ViewRequestBooks />,
-    },
-    {
-      // Comenté la entrada duplicada
-      // path: "/list_books",
-      // element: <ListBooks />,
-      // ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-      // Agregué la entrada correcta
-      path: "/otra_ruta",
-      element: <listBooks />,
     },
   ]);
 

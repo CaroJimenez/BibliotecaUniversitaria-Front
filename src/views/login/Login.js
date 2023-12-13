@@ -17,6 +17,7 @@ import {
 import Modal from "react-modal";
 import axios from "axios";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -34,6 +35,8 @@ function Login() {
   const [loading3, setLoading3] = useState(false);
   const [loading4, setLoading4] = useState(false);
   const [token, setToken] = useState("");
+
+  const navigate = useNavigate();
 
   const incrementar = () => {
     setFuente(fuente + 1);
@@ -141,6 +144,8 @@ function Login() {
       icon: "success",
       button: "Aceptar",
     });
+      // Redireccionamos a la ruta deseada
+      navigate("/list_books");
   };
 
   const noLogueado = () => {
@@ -153,32 +158,23 @@ function Login() {
   };
 
   const iniciarSesion = async () => {
-    const confirmar = await swal({
-      title: "¿Estás seguro?",
-      text: "¿Quieres iniciar sesión?",
-      icon: "warning",
-      buttons: ["Cancelar", "Aceptar"],
-      dangerMode: true,
-    });
-    if (confirmar) {
-      try {
-        setLoading2(true);
-        const response = await axios.post(
-          "http://192.168.56.1:8090/api/auth/signin",
-          {
-            matricula,
-            password,
-          }
-        );
-        inicioSesion();
-      } catch (error) {
-        noLogueado();
-      } finally {
-        setLoading2(false);
-      }
-    } else {
+    try {
+      setLoading2(true);
+      const response = await axios.post(
+        "http://192.168.56.1:8090/api/auth/signin",
+        {
+          matricula,
+          password,
+        }
+      );
+      inicioSesion();
+    } catch (error) {
+      noLogueado();
+    } finally {
+      setLoading2(false);
     }
   };
+  
 
   const olvidarContraseña = async () => {
     try {
