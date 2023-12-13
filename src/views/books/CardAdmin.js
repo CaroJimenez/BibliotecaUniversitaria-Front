@@ -8,10 +8,10 @@ const LibroAdmin = ({ id, title, content, imagen, categoria, subcategoria }) => 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [editedData, setEditedData] = useState({
       title: title,
-      content: content,
-      imagen: imagen,
-      categoria: categoria,
-      subcategoria: subcategoria,
+      description: content,
+      image_name: imagen,
+      id_categoria_book: categoria,
+      // subcategoria: subcategoria,
     });
 
   
@@ -49,7 +49,7 @@ const LibroAdmin = ({ id, title, content, imagen, categoria, subcategoria }) => 
       <div className="card-body">
         <div className="text-center d-flex justify-content-center align-items-center" style={{padding: "50px"}}>
           <img
-            src={imagen}
+            src={imagen? imagen: "https://cdn-icons-png.flaticon.com/512/207/207114.png"}
             alt="portada_libro"
             style={{ width: "200px", height: "300px" }}
           />
@@ -85,7 +85,7 @@ const LibroAdmin = ({ id, title, content, imagen, categoria, subcategoria }) => 
               <Form.Control
                 as="textarea"
                 rows={3}
-                name="content"
+                name="descripction"
                 value={editedData.content}
                 onChange={handleInputChange}
               />
