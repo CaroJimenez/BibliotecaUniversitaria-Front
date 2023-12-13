@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+<<<<<<< HEAD
 import ListBooks from "./views/books/list_books";
 import Login from "./views/login/Login";
 // import EditLibro from "./views/books/EditBook"
@@ -8,6 +9,10 @@ import RequestBooks from "./views/RequestBooks/RequestBooks";
 import BookLoanRequest from "./views/BookLoanRequest/BookLoanRequest";
 import ViewFinesBooks from "./views/ViewFinesBooks/ViewFinesBooks";
 import ViewRequestBooks from "./views/ViewRequestBooks/ViewRequestBooks";
+=======
+import listBooks from "./views/books/list_books";
+import Login from "./views/login/Login"
+>>>>>>> origin/login
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +22,7 @@ function App() {
     },
     {
       path: "/list_books",
+<<<<<<< HEAD
       element: <ListBooks />,
     },
     {
@@ -40,6 +46,11 @@ function App() {
     //   element: <ListBooks />,
     // },
   ]);
+=======
+      element: <listBooks/>
+    }
+  ])
+>>>>>>> origin/login
 
   return (
     <RouterProvider router={router}>
