@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./RequestBooks.css";
+import NavbarAdmin from "../../components/NavbarAdmin";
 
 function RequestBooks() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,6 +35,7 @@ function RequestBooks() {
 
   return (
     <div>
+      <NavbarAdmin />
       <main>
         <input
           type="text"
