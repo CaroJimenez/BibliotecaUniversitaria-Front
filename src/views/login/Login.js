@@ -105,7 +105,7 @@ function Login() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://192.168.0.232:8090/api/auth/signup",
+        "http://192.168.56.1:8090/api/auth/signup",
         {
           email,
           password,
@@ -164,7 +164,7 @@ function Login() {
       try {
         setLoading2(true);
         const response = await axios.post(
-          "http://192.168.0.232:8090/api/auth/signin",
+          "http://192.168.56.1:8090/api/auth/signin",
           {
             matricula,
             password,
@@ -184,7 +184,7 @@ function Login() {
     try {
       setLoading3(true);
       const response = await axios.post(
-        `http://192.168.0.232:8090/api/auth/all/forgot-password?email=${email}`
+        `http://192.168.56.1:8090/api/auth/all/forgot-password?email=${email}`
       );
     } catch (error) {
     } finally {
@@ -196,7 +196,7 @@ function Login() {
     try {
       setLoading4(true);
       const response = await axios.put(
-        `http://192.168.0.232:8090/api/auth/all/reset-password?token=${token}&password=${password}`
+        `http://192.168.56.1:8090/api/auth/all/reset-password?token=${token}&password=${password}`
       );
     } catch (error) {
     } finally {
