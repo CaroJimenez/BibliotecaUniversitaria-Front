@@ -18,18 +18,18 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
   });
 
   useEffect(() => {
-    getCategoriesAxios();
+    // getCategoriesAxios();
     getSubCategoriesAxios();
   }, []);
 
-  async function getCategoriesAxios() {
-    try {
-      const category = await getCategory();
-      setCategory(category.data);
-    } catch (error) {
-      console.error("Error al obtener las categorias: ", error);
-    }
-  }
+  // async function getCategoriesAxios() {
+  //   try {
+  //     const category = await getCategory();
+  //     setCategory(category.data);
+  //   } catch (error) {
+  //     console.error("Error al obtener las categorias: ", error);
+  //   }
+  // }
 
   async function getSubCategoriesAxios() {
     try {
@@ -67,12 +67,12 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
     setImagen(file);
   };
 
-  const filterSubcategories = () => {
-    const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
-      return parseInt(subCategory.id) === parseInt(selectedCategoryId);
-    });
-    return filteredSubcategoriesFild;
-  };
+  // const filterSubcategories = () => {
+  //   const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
+  //     return parseInt(subCategory.id) === parseInt(selectedCategoryId);
+  //   });
+  //   return filteredSubcategoriesFild;
+  // };
 
   return (
     <Modal show={showModal} onHide={closeModal}>
@@ -122,7 +122,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
             />
           </Form.Group>
 
-          <Form.Group controlId="formCategoria">
+          {/* <Form.Group controlId="formCategoria">
             <Form.Label>Categoría:</Form.Label>
             <Form.Control
               as="select"
@@ -137,7 +137,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
                 </option>
               ))}
             </Form.Control>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group controlId="formSubcategoria">
             <Form.Label>Subcategoría:</Form.Label>
             <Form.Control
@@ -147,7 +147,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
               onChange={handleInputChange}
             >
               <option value="0">Selecciona una subcategoría</option>
-              {filterSubcategories().map((subCategory) => (
+              {subCategorys.map((subCategory) => (
                 <option key={subCategory.id} value={subCategory.id}>
                   {subCategory.name}
                 </option>

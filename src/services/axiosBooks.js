@@ -23,6 +23,7 @@ export const postNewBook = async (jsonData) => {
         headers: {
           "Content-Type": "application/json",
         },
+        // Authorization: `Bearer ${tuTokenJWT}`,
       });
       return response.data;
     } catch (error) {

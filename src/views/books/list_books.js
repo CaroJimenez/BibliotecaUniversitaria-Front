@@ -14,32 +14,7 @@ const ListBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [theme, setTheme] = useState("claro");
   const [typeUser, setTypeUser] = useState(1);
-  const [booksP, setBooks] = useState([
-    {
-      id: 1,
-      title: "Libro 1",
-      content: "Contenido del Libro 1",
-      imagen: null,
-      categoria: "Ficción",
-      subcategoria: "Aventura",
-    },
-    {
-      id: 2,
-      title: "Libro 2",
-      content: "Contenido del Libro 2",
-      imagen: null, // Puede ser nulo si no hay imagen
-      categoria: "No Ficción",
-      subcategoria: "Historia",
-    },
-    {
-      id: 3,
-      title: "Libro 3",
-      content: "Contenido del Libro 3",
-      imagen: null,
-      categoria: "Misterio",
-      subcategoria: "Suspense",
-    },
-  ]);
+  const [booksP, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalC, setShowModalC] = useState(false);
   const [showModalS, setShowModalS] = useState(false);
@@ -121,7 +96,7 @@ const ListBooks = () => {
   return (
     <>
       <div className={`fondo-${theme}`}>
-        {typeUser === 1 ? <Navbar /> : <NavbarAdmin />}
+        {typeUser === 2 ? <Navbar /> : <NavbarAdmin />}
         <div>
           <h1 style={{ textAlign: "center", marginTop: "10px" }}>
             Libros Disponibles
@@ -137,7 +112,7 @@ const ListBooks = () => {
           </div>
 
           <div className="d-flex justify-content-end mb-4">
-            {typeUser === 2 && (
+            {typeUser === 1 && (
               <>
               <button style={{ margin: "5px", height: "43px", width: "175px" }} className="btn btn-primary" onClick={openModal}>
                 Nuevo Libro
@@ -163,7 +138,7 @@ const ListBooks = () => {
                 )
                 .map((item, index) => (
                   <div key={index} className="col">
-                    {typeUser === 1 ? (
+                    {typeUser === 2 ? (
                       <LibrosCard
                         id={item.id}
                         title={item.title}
