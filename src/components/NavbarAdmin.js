@@ -1,14 +1,18 @@
 import React, { useState, useContext } from "react";
+import { limpiarDatosLocales, THEME } from "../utils/constants";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 // import ThemeContext from "./ThemeContext";
 
 const NavbarAdmin = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [theme, setTheme] = useState("claro");
-  // const { theme, setTheme } = useContext(ThemeContext);
+  const [theme, setTheme] = useState(THEME);
+  const navigate = useNavigate();
 
-  // const handleThemeChange = () => {
-  //   setTheme(theme === 'claro' ? 'oscuro' : 'claro'); // Cambiar el tema
-  // };
+  function logout() {
+    navigate("/list_books");
+    limpiarDatosLocales();
+  }
 
   return (
     <nav
@@ -62,6 +66,9 @@ const NavbarAdmin = () => {
           </li>
           <li className="nav-item">
             {/* <button onClick={handleThemeChange}>Cambiar tema</button> */}
+          </li>
+          <li className="nav-item">
+            <Button onClick={logout}>Cerrar sesión</Button>
           </li>
         </ul>
       </div>

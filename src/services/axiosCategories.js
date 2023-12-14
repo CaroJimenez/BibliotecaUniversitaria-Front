@@ -1,6 +1,9 @@
-import axios from "axios"
+import axios from "axios";
+import { API_BASE_URL, DATA_ } from "../utils/constants";
 
-const API_BASE_URL = "http://192.168.56.1:8090";
+// Asegúrate de que DATA_ esté definido y tenga la propiedad jwtToken
+const tuTokenJWT = (DATA_ && DATA_[0] && DATA_[0].jwtToken) ? DATA_[0].jwtToken : "";
+
 
 export const getCategory = async () => {
   try {
@@ -38,6 +41,7 @@ export const postNewCategory = async (jsonData) => {
       headers: {
         "Content-Type": "application/json",
       },
+      Authorization: `Bearer ${tuTokenJWT}`,
     });
     return response.data;
   } catch (error) {

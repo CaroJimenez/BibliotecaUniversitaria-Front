@@ -8,8 +8,7 @@ const EditBook = () => {
     <Navbar/>
     <div className="container">
         <div className=''>
-            Hola Mundo!!
-            Soy yo de nuevo
+            Profa si ve esto no nos mande a extra, plis!!
             </div>      
     </div>
     </>

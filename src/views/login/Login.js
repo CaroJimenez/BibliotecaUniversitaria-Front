@@ -17,7 +17,13 @@ import {
 import Modal from "react-modal";
 import axios from "axios";
 import swal from "sweetalert";
+import {
+  API_BASE_URL,
+  DATA_,
+  actualizarAlmacenamientoLocal,
+} from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
+// import { useAuth } from "../../components/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -35,9 +41,9 @@ function Login() {
   const [loading3, setLoading3] = useState(false);
   const [loading4, setLoading4] = useState(false);
   const [token, setToken] = useState("");
-  const API_BASE_URL = "http://192.168.56.1:8090";
 
   const navigate = useNavigate();
+  // const { loogin } = useAuth();
 
   const incrementar = () => {
     setFuente(fuente + 1);
@@ -108,17 +114,14 @@ function Login() {
     }
     try {
       setLoading(true);
-      const response = await axios.post(
-        API_BASE_URL+"/api/auth/signup",
-        {
-          email,
-          password,
-          matricula,
-          name,
-          last_name,
-          birthday,
-        }
-      );
+      const response = await axios.post(API_BASE_URL + "/api/auth/signup", {
+        email,
+        password,
+        matricula,
+        name,
+        last_name,
+        birthday,
+      });
 
       swal({
         title: "¡Registro exitoso!",
@@ -139,15 +142,22 @@ function Login() {
   };
 
   const inicioSesion = (data) => {
-    console.log(data)
+    const userInfo = data.userInfo;
+    console.log(userInfo);
+    DATA_.push({
+      id: userInfo.id,
+      rol: userInfo.roles[0].pop(),
+      jwtToken: data.jwtToken
+    });
+    actualizarAlmacenamientoLocal();
     swal({
       title: "¡Inicio se sesión exitoso!",
       text: "¡Bienvenido!",
       icon: "success",
       button: "Aceptar",
     });
-      // Redireccionamos a la ruta deseada
-      navigate("/list_books");
+    // Redireccionamos a la ruta deseada
+    navigate("/list_books");
   };
 
   const noLogueado = () => {
@@ -162,21 +172,18 @@ function Login() {
   const iniciarSesion = async () => {
     try {
       setLoading2(true);
-      const response = await axios.post(
-        API_BASE_URL+"/api/auth/signin",
-        {
-          matricula,
-          password,
-        }
-      );
+      const response = await axios.post(API_BASE_URL + "/api/auth/signin", {
+        matricula,
+        password,
+      });
       inicioSesion(response.data);
     } catch (error) {
+      console.log(error);
       noLogueado();
     } finally {
       setLoading2(false);
     }
   };
-  
 
   const olvidarContraseña = async () => {
     try {

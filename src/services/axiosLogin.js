@@ -1,6 +1,5 @@
 import axios from "axios"
-
-const API_BASE_URL = "http://192.168.56.1:8090";
+import { API_BASE_URL } from "../utils/constants";
 
 export const login = async (jsonData) => {
     try {
