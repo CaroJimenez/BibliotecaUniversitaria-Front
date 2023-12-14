@@ -35,6 +35,7 @@ function Login() {
   const [loading3, setLoading3] = useState(false);
   const [loading4, setLoading4] = useState(false);
   const [token, setToken] = useState("");
+  const API_BASE_URL = "http://192.168.56.1:8090";
 
   const navigate = useNavigate();
 
@@ -108,7 +109,7 @@ function Login() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://192.168.56.1:8090/api/auth/signup",
+        API_BASE_URL+"/api/auth/signup",
         {
           email,
           password,
@@ -137,7 +138,8 @@ function Login() {
     }
   };
 
-  const inicioSesion = () => {
+  const inicioSesion = (data) => {
+    console.log(data)
     swal({
       title: "¡Inicio se sesión exitoso!",
       text: "¡Bienvenido!",
@@ -161,13 +163,13 @@ function Login() {
     try {
       setLoading2(true);
       const response = await axios.post(
-        "http://192.168.56.1:8090/api/auth/signin",
+        API_BASE_URL+"/api/auth/signin",
         {
           matricula,
           password,
         }
       );
-      inicioSesion();
+      inicioSesion(response.data);
     } catch (error) {
       noLogueado();
     } finally {
@@ -180,7 +182,7 @@ function Login() {
     try {
       setLoading3(true);
       const response = await axios.post(
-        `http://192.168.56.1:8090/api/auth/all/forgot-password?email=${email}`
+        `${API_BASE_URL}/api/auth/all/forgot-password?email=${email}`
       );
     } catch (error) {
     } finally {
@@ -192,7 +194,7 @@ function Login() {
     try {
       setLoading4(true);
       const response = await axios.put(
-        `http://192.168.56.1:8090/api/auth/all/reset-password?token=${token}&password=${password}`
+        `${API_BASE_URL}/api/auth/all/reset-password?token=${token}&password=${password}`
       );
     } catch (error) {
     } finally {
