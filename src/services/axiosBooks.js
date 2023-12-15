@@ -22,6 +22,7 @@ export const getBooks = async () => {
 
 export const postNewBook = async (jsonData) => {
   console.log(tuTokenJWT);
+  console.log(jsonData);
     try {
       const response = await axios.post(`${API_BASE_URL}/api/book/`, jsonData, {
         headers: {
@@ -35,3 +36,37 @@ export const postNewBook = async (jsonData) => {
       throw error;
     }
   };
+
+  export const updateBook = async (jsonData) => {
+    console.log(tuTokenJWT);
+    console.log(jsonData);
+      try {
+        const response = await axios.put(`${API_BASE_URL}/api/book/`, jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+           Authorization: `Bearer ${tuTokenJWT}`,
+        });
+        return response.data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    };
+
+  export const deleteBook = async (jsonData) => {
+    console.log(tuTokenJWT);
+    console.log(jsonData);
+      try {
+        const response = await axios.delete(`${API_BASE_URL}/api/book/`, jsonData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+           Authorization: `Bearer ${tuTokenJWT}`,
+        });
+        return response.data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    };

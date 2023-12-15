@@ -146,7 +146,7 @@ function Login() {
     console.log(userInfo);
     DATA_.push({
       id: userInfo.id,
-      rol: userInfo.roles[0].pop(),
+      rol: userInfo.roles[0],
       jwtToken: data.jwtToken
     });
     actualizarAlmacenamientoLocal();

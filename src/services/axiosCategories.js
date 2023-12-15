@@ -49,3 +49,18 @@ export const postNewCategory = async (jsonData) => {
     throw error;
   }
 };
+
+export const postNewSubCategory = async (jsonData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/api/subcategory/`, jsonData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      Authorization: `Bearer ${tuTokenJWT}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

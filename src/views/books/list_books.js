@@ -15,7 +15,7 @@ import "../../css/estilos.css";
 const ListBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [theme, setTheme] = useState(THEME);
-  const [typeUser, setTypeUser] = useState(2);
+  const [typeUser, setTypeUser] = useState(1);
   const [booksP, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalC, setShowModalC] = useState(false);
@@ -57,8 +57,8 @@ const ListBooks = () => {
   function verify() {
     if (DATA_) {
       setUserInfo(DATA_);
-      setRole(DATA_[0].rol.pop());
-      console.log(DATA_[0].rol.pop());
+      setRole(DATA_[0].rol);
+      console.log(DATA_[0].rol);
       console.log(typeUser);
       if (rol == "ROLE_STUDENT" || rol === undefined) {
         setTypeUser(2);
@@ -87,18 +87,22 @@ const ListBooks = () => {
   };
 
   const handleAgregarLibro = async (nuevoLibro) => {
+    let libros_actuales = booksP.length;
+    var count = parseInt(libros_actuales) + 1;
+    console.log(libros_actuales);
     console.log("Nuevo libro Solo Esta:", nuevoLibro);
     if (nuevoLibro) {
       const nuevoLibroParaDB = {
+        id: parseInt(count),
         title: nuevoLibro.title,
         author: nuevoLibro.author,
         publication_date: nuevoLibro.publication_date,
         description: nuevoLibro.description,
         subCategory: {
-            id: nuevoLibro.subCategory,
-            name: nuevoLibro.subCategoryName,
+            id: 3,
+            name: "Fantasia",
             category: {
-                id: 3,  // Ajusta según sea necesario
+                id: 1,  // Ajusta según sea necesario
                 name: "Terror",  // Ajusta según sea necesario
             },
         },
@@ -107,13 +111,14 @@ const ListBooks = () => {
 
     console.log(nuevoLibroParaDB);
 
-      try {
-        const newbook = await postNewBook(nuevoLibroParaDB);
-        console.log(newbook);
-      } catch (error) {
-        // Manejar el error
-        console.error("Error al guardar el libro:", error);
-      }
+      // try {
+      //   const newbook = await postNewBook(nuevoLibroParaDB);
+      //   console.log(newbook);
+      //   getBooksAxios();
+      // } catch (error) {
+      //   // Manejar el error
+      //   console.error("Error al guardar el libro:", error);
+      // }
     }
   };
 
@@ -187,6 +192,7 @@ const ListBooks = () => {
                         imagen={item.imagen}
                         categoria={item.categoria}
                         subcategoria={item.subcategia}
+                        disponibility={item.disponibility}
                       />
                     ) : (
                       <AdminCard
@@ -196,6 +202,7 @@ const ListBooks = () => {
                         imagen={item.imagen}
                         categoria={item.categoria}
                         subcategoria={item.subcategia}
+                        disponibility={item.disponibility}
                       />
                     )}
                   </div>

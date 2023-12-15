@@ -6,30 +6,34 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
   const [categorys, setCategory] = useState([]);
   const [subCategorys, setSubCategory] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+  const [nameCategory, setNameCategory ] = useState("");
+  const [nameSubCategory, setNameSubCategory] = useState("");
   const [imagen, setImagen] = useState(null);
   const [nuevoLibro, setNuevoLibro] = useState({
     title: "",
     description: "",
-    image_name: "",
-    id_category_book: 2,
-    id_subcategory: 1,
+    subCategory: 0,
+    subCategoryName: "",
+    categoryName: "",
+    subCategoryName: "",
+    category: "",
     author: "",
     publication_date: "",
   });
 
   useEffect(() => {
-    // getCategoriesAxios();
+    getCategoriesAxios();
     getSubCategoriesAxios();
   }, []);
 
-  // async function getCategoriesAxios() {
-  //   try {
-  //     const category = await getCategory();
-  //     setCategory(category.data);
-  //   } catch (error) {
-  //     console.error("Error al obtener las categorias: ", error);
-  //   }
-  // }
+  async function getCategoriesAxios() {
+    try {
+      const category = await getCategory();
+      setCategory(category.data);
+    } catch (error) {
+      console.error("Error al obtener las categorias: ", error);
+    }
+  }
 
   async function getSubCategoriesAxios() {
     try {
@@ -46,11 +50,8 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
     if (name === "id_category_book") {
       setSelectedCategoryId(value);
     }
-    // console.log(e.target);
-    // if (e.target.files[0] !== null) {
-    //   const file = e.target.files[0];
-    //   setImagen(file);
-    // }
+    
+    
     setNuevoLibro({
       ...nuevoLibro,
       [name]: value,
@@ -67,12 +68,12 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
     setImagen(file);
   };
 
-  // const filterSubcategories = () => {
-  //   const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
-  //     return parseInt(subCategory.id) === parseInt(selectedCategoryId);
-  //   });
-  //   return filteredSubcategoriesFild;
-  // };
+  const filterSubcategories = () => {
+    const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
+      return parseInt(subCategory.id) === parseInt(selectedCategoryId);
+    });
+    return filteredSubcategoriesFild;
+  };
 
   return (
     <Modal show={showModal} onHide={closeModal}>
@@ -122,7 +123,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
             />
           </Form.Group>
 
-          {/* <Form.Group controlId="formCategoria">
+          <Form.Group controlId="formCategoria">
             <Form.Label>Categoría:</Form.Label>
             <Form.Control
               as="select"
@@ -137,7 +138,7 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
                 </option>
               ))}
             </Form.Control>
-          </Form.Group> */}
+          </Form.Group>
           <Form.Group controlId="formSubcategoria">
             <Form.Label>Subcategoría:</Form.Label>
             <Form.Control
