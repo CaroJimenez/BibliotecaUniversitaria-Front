@@ -1,7 +1,7 @@
 import axios from "axios"
 import { API_BASE_URL, DATA_ } from "../utils/constants";
 
-// Asegúrate de que DATA_ esté definido y tenga la propiedad jwtToken
+// Esto checa si DATA_ tiene la propiedad jwt
 const tuTokenJWT = (DATA_ && DATA_[0] && DATA_[0].jwtToken) ? DATA_[0].jwtToken : "";
 
 
@@ -58,7 +58,7 @@ export const postNewBook = async (jsonData) => {
     console.log(tuTokenJWT);
     console.log(jsonData);
       try {
-        const response = await axios.delete(`${API_BASE_URL}/api/book/`, jsonData, {
+        const response = await axios.delete(`${API_BASE_URL}/api/book/${jsonData}/`, {
           headers: {
             "Content-Type": "application/json",
           },

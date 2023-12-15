@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { getCategory, getSubCategory } from "../../services/axiosCategories";
 
-const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
+const ModalAddbook = ({ showModal, closeModal, agregarLibro, updateContent }) => {
   const [categorys, setCategory] = useState([]);
   const [subCategorys, setSubCategory] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(0);
-  const [nameCategory, setNameCategory ] = useState("");
+  const [nameCategory, setNameCategory] = useState("");
+  const [selectSubCatId, setSelectedSubCateId] = useState(0);
   const [nameSubCategory, setNameSubCategory] = useState("");
-  const [imagen, setImagen] = useState(null);
   const [nuevoLibro, setNuevoLibro] = useState({
     title: "",
     description: "",
-    subCategory: 0,
-    subCategoryName: "",
-    categoryName: "",
-    subCategoryName: "",
-    category: "",
+    idSubCategory: selectSubCatId,
+    subCategoryName: nameSubCategory,
+    categoryName: nameCategory,
+    idCategory: selectedCategoryId,
     author: "",
     publication_date: "",
   });
@@ -24,17 +23,21 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
   useEffect(() => {
     getCategoriesAxios();
     getSubCategoriesAxios();
-  }, []);
+    updateContent = false;
+  }, [updateContent]);
 
+  //Función que traé las categorias
   async function getCategoriesAxios() {
     try {
       const category = await getCategory();
+      console.log(category);
       setCategory(category.data);
     } catch (error) {
       console.error("Error al obtener las categorias: ", error);
     }
   }
 
+  //Función que traé las subcategorias
   async function getSubCategoriesAxios() {
     try {
       const subCategory = await getSubCategory();
@@ -45,34 +48,69 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
     }
   }
 
+  //Función que trae lo modificado del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "id_category_book") {
+    console.log(name);
+    if (name === "idCategory") {
       setSelectedCategoryId(value);
+      filterSubcategories();
+      const findCategory = categorys.find((cat) => {
+        return parseInt(cat.id) === parseInt(value);
+      });
+      // console.log("findcat:", findCategory);
+      setNameCategory(findCategory.name);
     }
-    
-    
+
+    if (name === "idSubCategory") {
+      setSelectedSubCateId(value);
+      const findSubCategory = subCategorys.find((sub) => {
+        return parseInt(sub.id) === parseInt(value);
+      });
+      // console.log("findsub:",findSubCategory);
+      setNameSubCategory(findSubCategory.name);
+    }
+
+    //Setteo de datos
     setNuevoLibro({
       ...nuevoLibro,
       [name]: value,
     });
   };
 
+  // Cierra el modal y lo manda a la vista padre
   const handleAgregarLibro = () => {
-    agregarLibro(nuevoLibro);
+    console.log("categoria: " + nameCategory + " sub: " + nameSubCategory);
+
+    // Crear un nuevo objeto con las propiedades de nuevoLibro y las nuevas propiedades
+    const updatedLibro = {
+      ...nuevoLibro,
+      categoryName: nameCategory,
+      subCategoryName: nameSubCategory,
+    };
+
+    // Pasar el nuevo objeto a la función agregarLibro
+    agregarLibro(updatedLibro);
+
+    // Cerrar el modal
     closeModal();
   };
 
-  const handleImagenChange = (e) => {
-    const file = e.target.files[0];
-    setImagen(file);
-  };
-
+  //Filtro para el filtrado por subcateria dependiendo de la categoria
   const filterSubcategories = () => {
-    const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
-      return parseInt(subCategory.id) === parseInt(selectedCategoryId);
-    });
-    return filteredSubcategoriesFild;
+    var data = [];
+    if (parseInt(selectedCategoryId) !== 0) {
+      const filteredSubcategoriesFild = subCategorys.filter((subCategory) => {
+        console.log(selectedCategoryId);
+        return (
+          parseInt(subCategory.category.id) === parseInt(selectedCategoryId)
+        );
+      });
+      data = filteredSubcategoriesFild;
+    } else {
+      data = subCategorys;
+    }
+    return data;
   };
 
   return (
@@ -127,13 +165,13 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
             <Form.Label>Categoría:</Form.Label>
             <Form.Control
               as="select"
-              name="id_category_book"
-              value={nuevoLibro.id_category_book}
+              name="idCategory"
+              value={nuevoLibro.idCategory}
               onChange={handleInputChange}
             >
               <option value="0">Selecciona una categoría</option>
               {categorys.map((category) => (
-                <option key={category.id_category} value={category.id_category}>
+                <option key={category.idCategory} value={category.id}>
                   {category.name}
                 </option>
               ))}
@@ -143,33 +181,18 @@ const ModalAddbook = ({ showModal, closeModal, agregarLibro }) => {
             <Form.Label>Subcategoría:</Form.Label>
             <Form.Control
               as="select"
-              name="id_subcategory"
-              value={nuevoLibro.id_subcategory}
+              name="idSubCategory"
+              value={nuevoLibro.idSubCategory}
               onChange={handleInputChange}
             >
               <option value="0">Selecciona una subcategoría</option>
-              {subCategorys.map((subCategory) => (
+              {filterSubcategories().map((subCategory) => (
                 <option key={subCategory.id} value={subCategory.id}>
                   {subCategory.name}
                 </option>
               ))}
             </Form.Control>
           </Form.Group>
-          {/* <Form.Group controlId="formImagen">
-            <Form.Label>Seleccionar Imagen:</Form.Label>
-            <Form.Control
-              type="file"
-              name="image_name"
-              value={nuevoLibro.imagen_name}
-              onChange={handleInputChange}
-            />
-            {imagen && (
-              <div>
-                <p>Nombre del Archivo: {imagen.name}</p>
-                <p>Tipo de Archivo: {imagen.type}</p>
-              </div>
-            )}
-          </Form.Group> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>

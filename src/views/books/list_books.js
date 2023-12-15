@@ -5,9 +5,11 @@ import LibrosCard from "./Card";
 import AdminCard from "./CardAdmin";
 import ModalAddbook from "../../components/book/ModalAddBook";
 import ModalAddCategory from "../../components/category/ModalAddCategory";
+import ModalAddSubCategory from "../../components/subcategory/ModalAddSub";
 import { Modal, Button, Form } from "react-bootstrap";
 import { getBooks, postNewBook } from "../../services/axiosBooks";
 import { DATA_, THEME, LETTERSIZE } from "../../utils/constants";
+import swal from "sweetalert";
 // import { useAuth } from "../../components/AuthContext";
 import "../../App.css";
 import "../../css/estilos.css";
@@ -15,7 +17,7 @@ import "../../css/estilos.css";
 const ListBooks = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [theme, setTheme] = useState(THEME);
-  const [typeUser, setTypeUser] = useState(1);
+  const [typeUser, setTypeUser] = useState(2);
   const [booksP, setBooks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalC, setShowModalC] = useState(false);
@@ -54,17 +56,18 @@ const ListBooks = () => {
     getBooksAxios();
   }, []);
 
+  //Función qeu chaca que tipo de usuario está logeado
   function verify() {
     if (DATA_) {
       setUserInfo(DATA_);
       setRole(DATA_[0].rol);
       console.log(DATA_[0].rol);
       console.log(typeUser);
-      if (rol == "ROLE_STUDENT" || rol === undefined) {
-        setTypeUser(2);
-      } else {
-        setTypeUser(1);
-      }
+      // if (rol == "ROLE_STUDENT" || rol === undefined) {
+      //   setTypeUser(2);
+      // } else {
+      //   setTypeUser(1);
+      // }
       console.log(typeUser);
     }
   }
@@ -81,16 +84,46 @@ const ListBooks = () => {
 
   const handleAddCategory = async (nuevaCategoria) => {
     if (nuevaCategoria) {
+      swal({
+        title: "¡Registro exitoso!",
+        text: "¡Se ha registrado con éxito la categoría!",
+        icon: "success",
+        button: "Aceptar",
+      });
     } else {
-      alert("La categoria no puede estar vacia");
+      swal({
+        title: "¡Error al registrar!",
+        text: "¡Intenta de nuevo!",
+        icon: "error",
+        button: "Aceptar",
+      });
     }
   };
 
+  const handleAddSubCategory = async (nuevaSubCategoria) => {
+    if (nuevaSubCategoria) {
+      swal({
+        title: "¡Registro exitoso!",
+        text: "¡Se ha registrado con éxito la subcategoría!",
+        icon: "success",
+        button: "Aceptar",
+      });
+    } else {
+      swal({
+        title: "¡Error al registrar!",
+        text: "¡Intenta de nuevo!",
+        icon: "error",
+        button: "Aceptar",
+      });
+    }
+  };
+
+  //Función que nos permite guardar el libro
   const handleAgregarLibro = async (nuevoLibro) => {
     let libros_actuales = booksP.length;
     var count = parseInt(libros_actuales) + 1;
-    console.log(libros_actuales);
-    console.log("Nuevo libro Solo Esta:", nuevoLibro);
+    // console.log(libros_actuales);
+    // console.log("Nuevo libro Solo Esta:", nuevoLibro);
     if (nuevoLibro) {
       const nuevoLibroParaDB = {
         id: parseInt(count),
@@ -99,26 +132,39 @@ const ListBooks = () => {
         publication_date: nuevoLibro.publication_date,
         description: nuevoLibro.description,
         subCategory: {
-            id: 3,
-            name: "Fantasia",
-            category: {
-                id: 1,  // Ajusta según sea necesario
-                name: "Terror",  // Ajusta según sea necesario
-            },
+          id: parseInt(nuevoLibro.idSubCategory),
+          name: nuevoLibro.subCategoryName,
+          category: {
+            id: parseInt(nuevoLibro.idCategory),
+            name: nuevoLibro.categoryName,
+          },
         },
-        disponibility: "DISPONIBLE",  // Ajusta según sea necesario
-    };
+        disponibility: "DISPONIBLE",
+      };
+      
+    // console.log(nuevoLibroParaDB);
+    var jsonString = JSON.stringify(nuevoLibroParaDB);
 
-    console.log(nuevoLibroParaDB);
-
-      // try {
-      //   const newbook = await postNewBook(nuevoLibroParaDB);
-      //   console.log(newbook);
-      //   getBooksAxios();
-      // } catch (error) {
-      //   // Manejar el error
-      //   console.error("Error al guardar el libro:", error);
-      // }
+      try {
+        const newbook = await postNewBook(jsonString);
+        // console.log(newbook);
+        swal({
+          title: "¡Registro exitoso!",
+          text: "¡Se ha registrado con éxito el libro!",
+          icon: "success",
+          button: "Aceptar",
+        });
+        getBooksAxios();
+      } catch (error) {
+        // Manejar el error
+        console.error("Error al guardar el libro:", error);
+        swal({
+          title: "¡Error al registrar!",
+          text: "¡Intenta de nuevo!",
+          icon: "error",
+          button: "Aceptar",
+        });
+      }
     }
   };
 
@@ -149,23 +195,23 @@ const ListBooks = () => {
             {typeUser === 1 && (
               <>
                 <button
-                  style={{ margin: "5px", height: "43px", width: "175px" }}
+                  style={{ margin: "5px", height: "50px", width: "180px" }}
                   className="btn btn-primary"
                   onClick={openModal}
                 >
                   Nuevo Libro
                 </button>
                 <button
-                  style={{ margin: "5px", height: "43px", width: "175px" }}
+                  style={{ margin: "5px", height: "50px", width: "180px" }}
                   className="btn btn-primary"
                   onClick={openModalCategoria}
                 >
                   Nueva Categoría
                 </button>
                 <button
-                  style={{ margin: "5px", height: "43px", width: "175px" }}
+                  style={{ margin: "5px", height: "50px", width: "180px" }}
                   className="btn btn-primary"
-                  onClick={openModalCategoria}
+                  onClick={openModalSubCategoria}
                 >
                   Nueva Sub Categoría
                 </button>
@@ -180,7 +226,9 @@ const ListBooks = () => {
             >
               {booksP
                 .filter((item) =>
-                  item.title.toLowerCase().includes(searchTerm.toLowerCase())
+                  item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  item.subCategory.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  item.subCategory.category.name.toLowerCase().includes(searchTerm.toLowerCase())
                 )
                 .map((item, index) => (
                   <div key={index} className="col">
@@ -193,16 +241,22 @@ const ListBooks = () => {
                         categoria={item.categoria}
                         subcategoria={item.subcategia}
                         disponibility={item.disponibility}
+                        publication_date={item.publication_date}
                       />
                     ) : (
                       <AdminCard
                         id={item.id}
                         title={item.title}
-                        content={item.description}
+                        description={item.description}
                         imagen={item.imagen}
-                        categoria={item.categoria}
-                        subcategoria={item.subcategia}
+                        category={item.subCategory?.category?.name}
+                        idCategory={item.subCategory?.category?.id}
+                        subCategory={item.subCategory?.name}
+                        idSubCategory={item.subCategory?.id}
                         disponibility={item.disponibility}
+                        publication_date={item.publication_date}
+                        author={item.author}
+    
                       />
                     )}
                   </div>
@@ -212,11 +266,19 @@ const ListBooks = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 agregarLibro={handleAgregarLibro}
+                updateContent={true}
               />
               <ModalAddCategory
                 showModal={showModalC}
                 closeModal={closeModalC}
-                agregarLibro={handleAddCategory}
+                agregarCategory={handleAddCategory}
+                updateContent={true}
+              />
+              <ModalAddSubCategory
+                showModal={showModalS}
+                closeModal={closeModalS}
+                agregarSubCategory={handleAddSubCategory}
+                updateContent={true}
               />
             </div>
           </div>

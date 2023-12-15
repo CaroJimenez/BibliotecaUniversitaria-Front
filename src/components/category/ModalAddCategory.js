@@ -17,9 +17,21 @@ const ModalAddCategory = ({ showModal, closeModal, agregarCategory }) => {
 
   const handleAddCategory = async () => {
     try {
-      // Llamada al servicio para agregar una nueva categoría
-      const newCategory = await postNewCategory(nuevaCategoria);
+      var min = 10; // límite inferior del rango
+      var max = 100; // límite superior del rango
+      var num = Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log(num);
 
+      var data = {
+        id_category: parseInt(num),
+        name: nuevaCategoria.name,
+      };
+
+      // Convertir el objeto a una cadena JSON
+      var jsonString = JSON.stringify(data);
+      
+      // Llamada al servicio para agregar una nueva categoría
+      const newCategory = await postNewCategory(jsonString);
       // Agregar la nueva categoría al estado o realizar otras operaciones según sea necesario
       console.log("Nueva Categoría:", newCategory);
 

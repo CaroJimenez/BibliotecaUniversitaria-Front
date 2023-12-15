@@ -1,14 +1,21 @@
 import React, {useState, useContext} from "react";
-// import ThemeContext from "./ThemeContext";
+import { limpiarDatosLocales, THEME, actualizarTema } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [theme, setTheme ] = useState("claro")
-  // const { theme, setTheme } = useContext(ThemeContext);
+  const [theme, setTheme ] = useState(THEME)
+  const navigate = useNavigate();
 
-  // const handleThemeChange = () => {
-  //   setTheme(theme === 'claro' ? 'oscuro' : 'claro'); // Cambiar el tema
-  // };
+  const handleThemeChange = () => {
+    setTheme(theme === 'claro' ? 'oscuro' : 'claro'); // Cambiar el tema
+    actualizarTema(theme);
+  };
+  function logout() {
+    navigate("/");
+    limpiarDatosLocales();
+  }
 
   return (
     <nav className={`navbar navbar-expand-lg navbar-${theme} fondoNavbar-${theme}`}>
@@ -46,8 +53,11 @@ const Navbar = () => {
           <li className="nav-item">
             <a href="/perfil" className="nav-link">Perfil</a>
           </li>
+          {/* <li className="nav-item">
+          <Button style={{margin: "10px"}} onClick={handleThemeChange}>Cambiar tema</Button>
+          </li> */}
           <li className="nav-item">
-          {/* <button onClick={handleThemeChange}>Cambiar tema</button> */}
+            <Button style={{margin: "10px"}} onClick={logout}>Cerrar sesión</Button>
           </li>
         </ul>
       </div>
